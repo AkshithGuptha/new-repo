@@ -16,8 +16,7 @@ const Hero = () => {
   const handleYes = async () => {
     setSending(true);
     try {
-      // Call backend API to send email
-      const response = await fetch("http://localhost:3001/api/valentine-yes", {
+      const response = await fetch("/api/valentine-yes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
