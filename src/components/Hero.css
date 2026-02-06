@@ -1,0 +1,106 @@
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #fff6ec 0%, #ffe4f0 100%);
+    font-family: sans-serif;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* ONE BABY PINK CARD */
+.card {
+    background: #ffd9e6;
+    padding: 40px 60px;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    width: 90%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    margin: 0;
+    color: #c2185b;
+    font-size: 32px;
+}
+
+.subtitle {
+    margin-top: 12px;
+    color: #d81b60;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.msg {
+    margin: 6px 0;
+    color: #c2185b;
+    font-size: 20px;
+}
+
+.btns {
+    margin-top: 30px;
+    position: relative;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+button {
+    padding: 12px 28px;
+    margin: 0;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.25s ease;
+}
+
+.yes {
+    background: #ff6fa5;
+    color: white;
+    position: relative;
+    min-width: 120px;
+}
+
+.yes:hover {
+    background: #ff5a96;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(255, 107, 165, 0.4);
+}
+
+.no {
+    background: #222;
+    color: white;
+    position: relative;
+    min-width: 120px;
+}
+
+.no:hover {
+    background: #333;
+}
+
+.success {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.success h1 {
+    font-size: 40px;
+    color: #c2185b;
+    margin: 0;
+}
+
+.success img {
+    width: 300px;
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
