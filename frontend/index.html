@@ -2,9 +2,57 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b10">
 <title>OCR Go — Document Text Extraction</title>
 <style>
-:root{color-scheme:dark;--bg:#090b10;--panel:#11151e;--line:#293247;--muted:#9ba7bc;--blue:#80aaff}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#20345b,transparent 55%),var(--bg);color:#f4f7ff;font:15px/1.5 Inter,system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:28px 20px 48px}.nav{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;font-size:19px;letter-spacing:-.6px}.brand span{color:var(--blue)}.tag{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px}.hero{text-align:center;padding:55px 0 26px}.eyebrow{color:var(--blue);letter-spacing:2px;font-weight:700;font-size:12px}.hero h1{font-size:clamp(38px,6vw,62px);letter-spacing:-2.5px;line-height:1.05;margin:12px 0}.hero p{color:var(--muted);max-width:600px;margin:auto;font-size:16px}.frame{border:1px solid var(--line);background:var(--panel);padding:10px;border-radius:18px;overflow:hidden}iframe{display:block;width:100%;height:760px;border:0;border-radius:12px;background:#fff}.foot{text-align:center;color:#77839a;font-size:12px;padding-top:20px}@media(max-width:600px){main{padding:18px 10px}.hero{padding:40px 8px 20px}.frame{padding:4px}iframe{height:850px}}
+:root{color-scheme:dark;--bg:#080a0f;--panel:#10141d;--line:#252c3b;--muted:#9aa6bb;--text:#f4f7ff;--blue:#86aaff;--blue2:#4f7ff0;--green:#7ce0b1;--red:#ff8f9b}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -25%,#1d3156 0,transparent 52%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
+main{width:min(1050px,100%);margin:auto;padding:28px 22px 40px}.nav{display:flex;justify-content:space-between;align-items:center}.brand{font-size:21px;font-weight:850;letter-spacing:-1px}.brand span{color:var(--blue)}.pill{border:1px solid var(--line);border-radius:99px;padding:7px 11px;color:var(--muted);font-size:12px;display:flex;align-items:center;gap:8px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #7ce0b177}
+.hero{text-align:center;padding:58px 0 34px}.eyebrow{font-size:11px;font-weight:750;letter-spacing:2.5px;color:var(--blue)}h1{font-size:clamp(38px,6vw,64px);letter-spacing:-3px;line-height:1.02;margin:15px 0 18px}.hero p{max-width:590px;margin:auto;color:var(--muted);font-size:16px}
+.workspace{display:grid;grid-template-columns:minmax(0, .85fr) minmax(0,1.15fr);gap:16px}.card{border:1px solid var(--line);background:linear-gradient(155deg,#121722,#0d1017);border-radius:20px;padding:22px;min-width:0}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}.cardhead h2{font-size:15px;margin:0;letter-spacing:-.3px}.step{font-size:11px;color:#aebbd0;border:1px solid var(--line);border-radius:8px;padding:4px 8px}
+.drop{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:235px;border:1px dashed #3a4760;border-radius:15px;background:#0b0e15;text-align:center;padding:20px;cursor:pointer;transition:.2s}.drop:hover,.drop.over{border-color:var(--blue);background:#111a2b}.uploadicon{display:grid;place-items:center;width:48px;height:48px;border:1px solid #2c3b57;border-radius:14px;background:#162239;color:var(--blue);font-size:23px;margin-bottom:12px}.drop strong{font-size:14px}.drop p{margin:7px 0;color:var(--muted);font-size:12px}.filetypes{font-size:11px;color:#71809a;margin-top:13px}.fileinfo{font-size:12px;color:var(--blue);margin-top:10px;overflow-wrap:anywhere}
+button{font:inherit;cursor:pointer}.primary{width:100%;margin-top:14px;padding:13px 16px;border:0;border-radius:12px;background:linear-gradient(135deg,#8eb1ff,#5f85f2);color:#071020;font-weight:800;transition:.15s}.primary:disabled{opacity:.45;cursor:not-allowed}.primary:not(:disabled):hover{filter:brightness(1.08);transform:translateY(-1px)}.limits{font-size:11px;color:#7d8ba3;margin-top:13px;text-align:center}
+.output{min-height:350px;display:flex;flex-direction:column}.outputtop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px}.outputtop h2{font-size:15px;margin:0}.actions{display:flex;gap:7px}.smallbtn{font-size:11px;border:1px solid var(--line);border-radius:8px;background:#151b27;color:#cbd6e8;padding:7px 10px}.smallbtn:disabled{opacity:.35;cursor:not-allowed}
+#result{width:100%;min-height:285px;flex:1;resize:vertical;border:1px solid #222b3b;border-radius:12px;background:#090c12;color:#e8eefb;padding:14px;font:13px/1.7 ui-monospace,SFMono-Regular,Consolas,monospace;outline:none}#result:focus{border-color:#526eaa}#result::placeholder{color:#65728a}
+.status{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:12px;margin-top:13px;min-height:20px}.spinner{width:13px;height:13px;border:2px solid #36425a;border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;display:none}.status.loading .spinner{display:inline-block}.status.error{color:var(--red)}.status.success{color:var(--green)}@keyframes spin{to{transform:rotate(360deg)}}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.stat{border:1px solid var(--line);border-radius:8px;padding:5px 8px;font-size:11px;color:#9eacc2;display:none}.footer{text-align:center;padding:24px 0 0;color:#68758b;font-size:11px}.footer span{color:#9caac0}
+@media(max-width:760px){main{padding:18px 13px 28px}.hero{padding:43px 4px 26px}h1{letter-spacing:-2px}.workspace{grid-template-columns:1fr}.card{padding:16px}.drop{min-height:190px}.output{min-height:300px}#result{min-height:230px}.pill{font-size:10px}}
 </style>
-</head><body><main><nav class="nav"><div class="brand">OCR<span>GO</span></div><div class="tag">Image &amp; PDF text extraction</div></nav><header class="hero"><div class="eyebrow">DOCUMENT INTELLIGENCE</div><h1>Make every word<br>searchable.</h1><p>Turn scanned pages and images into editable text. Upload a document below to get started.</p></header><section class="frame"><iframe src="https://paddleocr-api-cvhs.onrender.com" title="OCR Go document text extraction" loading="eager" allow="clipboard-read; clipboard-write"></iframe></section><div class="foot">OCR Go · Files are processed for your request and are not intentionally stored by this demo.</div></main></body></html>
+</head>
+<body><main>
+<nav class="nav"><div class="brand">OCR<span>GO</span></div><div class="pill"><span class="dot"></span> IMAGE &amp; PDF TEXT EXTRACTION</div></nav>
+<header class="hero"><div class="eyebrow">DOCUMENT INTELLIGENCE</div><h1>Make every word<br>searchable.</h1><p>Turn scanned pages and images into editable text. Upload a file, extract its contents, then copy or download the result.</p></header>
+<section class="workspace">
+<div class="card"><div class="cardhead"><h2>Choose a document</h2><span class="step">STEP 01</span></div>
+<label id="drop" class="drop" for="file"><div class="uploadicon">↑</div><strong>Drop your file here</strong><p>or tap to browse your device</p><div class="filetypes">PDF · PNG · JPG · WEBP</div><div id="fileinfo" class="fileinfo">Maximum 10 MB · PDF up to 10 pages</div></label>
+<input id="file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,application/pdf,image/png,image/jpeg,image/webp" hidden>
+<button id="run" class="primary" disabled>Extract text <span aria-hidden="true">↗</span></button><div class="limits">English text recognition · Files are processed in memory</div>
+</div>
+<div class="card output"><div class="outputtop"><div class="cardhead" style="margin:0"><h2>Extracted text</h2><span class="step">STEP 02</span></div><div class="actions"><button id="copy" class="smallbtn" disabled>Copy</button><button id="download" class="smallbtn" disabled>Download .txt</button></div></div>
+<textarea id="result" spellcheck="false" placeholder="Your extracted text will appear here…"></textarea><div id="status" class="status"><span class="spinner"></span><span id="statusText">Ready when you are. Choose a file to begin.</span></div><div class="stats"><span id="pages" class="stat"></span><span id="lines" class="stat"></span></div>
+</div></section>
+<footer class="footer"> <span>OCR GO</span> · A focused workspace for document text extraction.</footer>
+</main>
+<script>
+const API_BASE = "https://paddleocr-api-cvhs.onrender.com";
+const fileInput=document.getElementById("file"),drop=document.getElementById("drop"),fileInfo=document.getElementById("fileinfo"),run=document.getElementById("run"),result=document.getElementById("result"),statusBox=document.getElementById("status"),statusText=document.getElementById("statusText"),copyBtn=document.getElementById("copy"),downloadBtn=document.getElementById("download");
+let selectedFile=null;
+function status(message,kind=""){statusBox.className="status "+kind;statusText.textContent=message}
+function setFile(file){selectedFile=file||null;if(!selectedFile){fileInfo.textContent="Maximum 10 MB · PDF up to 10 pages";run.disabled=true;return}
+fileInfo.textContent=selectedFile.name+" · "+(selectedFile.size/1024/1024).toFixed(2)+" MB";run.disabled=false;status("File selected. Ready to extract.");}
+fileInput.addEventListener("change",()=>setFile(fileInput.files[0]));
+for(const ev of ["dragenter","dragover"])drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("over")});
+for(const ev of ["dragleave","drop"])drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("over")});
+drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f){selectedFile=f;setFile(f)}});
+run.addEventListener("click",async()=>{if(!selectedFile)return;if(selectedFile.size>10*1024*1024){status("This file exceeds the 10 MB limit.","error");return}
+run.disabled=true;run.textContent="Processing…";status("Connecting to OCR engine. The first run may take longer while models initialize.","loading");result.value="";copyBtn.disabled=true;downloadBtn.disabled=true;
+try{const form=new FormData();form.append("file",selectedFile);const response=await fetch(API_BASE+"/api/ocr",{method:"POST",body:form});let data;try{data=await response.json()}catch{throw new Error("The OCR server returned an invalid response. Please retry in a moment.")}
+if(!response.ok)throw new Error(data.detail||"OCR request failed. Please try again.");
+result.value=data.text||"No readable text was found in this file.";copyBtn.disabled=!result.value;downloadBtn.disabled=!result.value;
+document.getElementById("pages").textContent=data.page_count+" page(s)";document.getElementById("lines").textContent=data.line_count+" text line(s)";document.querySelectorAll(".stat").forEach(el=>el.style.display="inline-block");
+status(data.line_count?"Extraction complete. Your text is ready.":"No readable text found. Try a sharper scan.","success");
+}catch(err){status(err.message||"Could not connect to OCR. The free service may be waking up; wait a moment and retry.","error")}
+finally{run.disabled=!selectedFile;run.innerHTML='Extract text <span aria-hidden="true">↗</span>'}});
+copyBtn.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(result.value);status("Text copied to clipboard.","success")}catch{result.select();status("Select the text and copy it manually.")}});
+downloadBtn.addEventListener("click",()=>{const blob=new Blob([result.value],{type:"text/plain;charset=utf-8"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=(selectedFile?.name||"ocr-result").replace(/\.[^.]+$/,"")+".txt";a.click();URL.revokeObjectURL(url)});
+</script></body></html>
