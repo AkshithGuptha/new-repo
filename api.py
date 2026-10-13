@@ -5,6 +5,7 @@ import threading
 import fitz
 import numpy as np
 from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, ImageOps
 from paddleocr import PaddleOCR
@@ -67,7 +68,7 @@ def decode_file(filename: str, data: bytes):
 
 @app.get("/")
 def home():
-    return {"name": "OCR Go", "status": "ok", "message": "OCR API is running. Use POST /api/ocr to extract text."}
+    return FileResponse("index.html", media_type="text/html")
 
 
 @app.get("/health")
