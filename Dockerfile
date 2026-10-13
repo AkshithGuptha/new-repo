@@ -15,5 +15,6 @@ COPY requirements.txt .
 RUN python -m pip install --upgrade pip && pip install -r requirements.txt
 
 COPY api.py .
+COPY frontend/index.html .
 EXPOSE 10000
 CMD ["python", "api.py"]
