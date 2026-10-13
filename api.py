@@ -97,9 +97,9 @@ async def run_ocr(file: UploadFile = File(...)):
                                 "text": str(item[1][0]),
                                 "confidence": round(float(item[1][1]), 4),
                             })
-                pages.append({"page": number, "text": "\\n".join(line["text"] for line in lines), "lines": lines})
-        text = "\\n\\n".join(
-            (f"--- Page {p['page']} ---\\n" if len(pages) > 1 else "") + p["text"] for p in pages
+                pages.append({"page": number, "text": "\n".join(line["text"] for line in lines), "lines": lines})
+        text = "\n\n".join(
+            (f"--- Page {p['page']} ---\n" if len(pages) > 1 else "") + p["text"] for p in pages
         ).strip()
         return {"filename": filename, "text": text, "pages": pages,
                 "page_count": len(pages), "line_count": sum(len(p["lines"]) for p in pages)}
