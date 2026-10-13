@@ -1,4 +1,5 @@
 import io
+import os
 import threading
 
 import fitz
@@ -110,4 +111,4 @@ with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", neutral_hue="slate"), ti
     run.click(fn=extract_text, inputs=upload, outputs=[result, details])
 
 if __name__ == "__main__":
-    demo.queue(default_concurrency_limit=1).launch(server_name="0.0.0.0", server_port=7860)
+    demo.queue(default_concurrency_limit=1).launch(server_name="0.0.0.0", server_port=int(os.environ.get("PORT", "7860")))
