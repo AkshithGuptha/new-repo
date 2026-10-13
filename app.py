@@ -81,21 +81,22 @@ def extract_text(file_path):
     except gr.Error:
         raise
     except Exception as exc:
-        raise gr.Error("OCR processing failed. Please retry; the Space logs may contain details.") from exc
+        raise gr.Error("OCR could not process this file. Please try a clearer image or a smaller PDF.") from exc
 
 
-with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", neutral_hue="slate"), title="OCR Go — PaddleOCR", css="""
+with gr.Blocks(theme=gr.themes.Soft(primary_hue="blue", neutral_hue="slate"), title="OCR Go", css="""
 .gradio-container {max-width: 1000px !important; margin: auto !important}
 #hero {text-align:center; padding: 22px 0 12px}
 #hero h1 {font-size: clamp(2.1rem, 5vw, 3.5rem); letter-spacing:-1.5px}
 #hero p {color: var(--body-text-color-subdued)}
 #result textarea {font-family: ui-monospace, SFMono-Regular, Consolas, monospace}
+footer, .built-with, .gradio-container footer {display:none !important}
 """) as demo:
     gr.HTML("""
     <div id="hero">
       <p style="letter-spacing:3px;font-weight:700;color:#73a7ff">DOCUMENT INTELLIGENCE</p>
       <h1>OCR Go — Make every word searchable.</h1>
-      <p>Extract text from images and PDFs with PaddleOCR. Free CPU demo.</p>
+      <p>Your private workspace for turning images and PDFs into editable text.</p>
     </div>
     """)
     with gr.Row():
