@@ -8,7 +8,7 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, ImageOps
-from paddleocr import PaddleOCR
+from rapidocr_onnxruntime import RapidOCR
 import uvicorn
 
 MAX_UPLOAD_BYTES = 10 * 1024 * 1024
@@ -32,7 +32,7 @@ def get_engine():
     if _engine is None:
         with _engine_lock:
             if _engine is None:
-                _engine = PaddleOCR(use_angle_cls=True, lang="en", show_log=False)
+                _engine = RapidOCR()
     return _engine
 
 
@@ -89,15 +89,14 @@ async def run_ocr(file: UploadFile = File(...)):
             engine = get_engine()
             pages = []
             for number, image in enumerate(images, start=1):
-                raw = engine.ocr(image, cls=True)
+                raw, _elapsed = engine(image)
                 lines = []
-                if raw and raw[0]:
-                    for item in raw[0]:
-                        if len(item) > 1 and item[1]:
-                            lines.append({
-                                "text": str(item[1][0]),
-                                "confidence": round(float(item[1][1]), 4),
-                            })
+                for item in (raw or []):
+                    if len(item) >= 3 and item[1]:
+                        lines.append({
+                            "text": str(item[1]),
+                            "confidence": round(float(item[2]), 4),
+                        })
                 pages.append({"page": number, "text": "\n".join(line["text"] for line in lines), "lines": lines})
         text = "\n\n".join(
             (f"--- Page {p['page']} ---\n" if len(pages) > 1 else "") + p["text"] for p in pages
