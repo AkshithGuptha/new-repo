@@ -3,7 +3,12 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090b10">
-<title>OCR Go — Document Text Extraction</title>
+<meta name="description" content="OCR Go — a simple, fast workspace to turn scanned PDFs and images into editable text.">
+<meta property="og:title" content="OCR Go — Smart Document Reader">
+<meta property="og:description" content="Turn scanned PDFs and images into editable, searchable text.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ocr-go-frontend.vercel.app/">
+<title>OCR Go — Smart Document Reader</title>
 <style>
 :root{color-scheme:dark;--bg:#080a0f;--panel:#10141d;--line:#252c3b;--muted:#9aa6bb;--text:#f4f7ff;--blue:#86aaff;--blue2:#4f7ff0;--green:#7ce0b1;--red:#ff8f9b}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -25%,#1d3156 0,transparent 52%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,sans-serif}
@@ -20,7 +25,7 @@ button{font:inherit;cursor:pointer}.primary{width:100%;margin-top:14px;padding:1
 </style>
 </head>
 <body><main>
-<nav class="nav"><div class="brand">OCR<span>GO</span></div><div class="pill"><span class="dot"></span> IMAGE &amp; PDF TEXT EXTRACTION</div></nav>
+<nav class="nav"><div class="brand">OCR <span>Go</span></div><div class="pill"><span class="dot"></span> IMAGE &amp; PDF TEXT EXTRACTION</div></nav>
 <header class="hero"><div class="eyebrow">DOCUMENT INTELLIGENCE</div><h1>Make every word<br>searchable.</h1><p>Turn scanned pages and images into editable text. Upload a file, extract its contents, then copy or download the result.</p></header>
 <section class="workspace">
 <div class="card"><div class="cardhead"><h2>Choose a document</h2><span class="step">STEP 01</span></div>
@@ -31,7 +36,7 @@ button{font:inherit;cursor:pointer}.primary{width:100%;margin-top:14px;padding:1
 <div class="card output"><div class="outputtop"><div class="cardhead" style="margin:0"><h2>Extracted text</h2><span class="step">STEP 02</span></div><div class="actions"><button id="copy" class="smallbtn" disabled>Copy</button><button id="download" class="smallbtn" disabled>Download .txt</button></div></div>
 <textarea id="result" spellcheck="false" placeholder="Your extracted text will appear here…"></textarea><div id="status" class="status"><span class="spinner"></span><span id="statusText">Ready when you are. Choose a file to begin.</span></div><div class="stats"><span id="pages" class="stat"></span><span id="lines" class="stat"></span></div>
 </div></section>
-<footer class="footer"> <span>OCR GO</span> · A focused workspace for document text extraction.</footer>
+<footer class="footer"> <span>OCR Go</span> · Your workspace for searchable text.</footer>
 </main>
 <script>
 const API_BASE = "https://paddleocr-api-cvhs.onrender.com";
