@@ -34,7 +34,7 @@ button{font:inherit;cursor:pointer}.primary{width:100%;margin-top:14px;padding:1
 <footer class="footer"> <span>OCR GO</span> · A focused workspace for document text extraction.</footer>
 </main>
 <script>
-const API_BASE = window.location.origin;
+const API_BASE = "https://paddleocr-api-cvhs.onrender.com";
 const fileInput=document.getElementById("file"),drop=document.getElementById("drop"),fileInfo=document.getElementById("fileinfo"),run=document.getElementById("run"),result=document.getElementById("result"),statusBox=document.getElementById("status"),statusText=document.getElementById("statusText"),copyBtn=document.getElementById("copy"),downloadBtn=document.getElementById("download");
 let selectedFile=null;
 function status(message,kind=""){statusBox.className="status "+kind;statusText.textContent=message}
