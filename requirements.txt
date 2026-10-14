@@ -1,12 +1,8 @@
-gradio==5.29.1
-paddlepaddle==2.6.2
-paddleocr==2.10.0
-PyMuPDF==1.25.5
-Pillow==11.1.0
 fastapi==0.115.12
 uvicorn==0.34.2
 python-multipart==0.0.20
+PyMuPDF==1.25.5
+Pillow==11.1.0
 numpy==1.26.4
-opencv-python==4.10.0.84
-opencv-contrib-python==4.10.0.84
 opencv-python-headless==4.10.0.84
+rapidocr-onnxruntime==1.4.4
